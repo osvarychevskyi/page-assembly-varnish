@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  varnish:
+    image: "varnish:latest"
+    ports:
+    - "8080:80"
+    volumes:
+    - ./varnish/default.vcl:/etc/varnish/default.vcl
+  page-assembly:
+    image: "webratio/nodejs-http-server"
+    command: "http-server /opt/www -c-1"
+    expose:
+      - "9000"
+    ports:
+    - "9000:9000"
+    volumes:
+    - ./html/page-assembly:/opt/www
+    environment:
+      PORT: 9000
+  content:
+    image: "webratio/nodejs-http-server"
+    expose:
+    - "9001"
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./html/content:/opt/www
+    environment:
+      PORT: 9001
+  news:
+    image: "webratio/nodejs-http-server"
+    command: "http-server /opt/www -c-1"
+    expose:
+      - "9002"
+    ports:
+      - "9002:9002"
+    volumes:
+      - ./html/news:/opt/www
+    environment:
+      PORT: 9002
