@@ -1,19 +1,19 @@
-#Getting Started
+# Getting Started
 
-##Clone Repository
+## Clone Repository
 ```bash
 git clone git@github.com:osvarychevskyi/page-assembly-varnish.git
 ```
 
-##Install
+## Install
 * docker
 * docker-compose
 
-##Run
+## Run
 ```bash
 docker-compose up
 ```
 
-##Open
+## Open
 
-###http://localhost:8080
+### http://localhost:8080
