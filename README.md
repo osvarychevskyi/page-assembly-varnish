@@ -2,7 +2,7 @@
 
 ## Clone Repository
 ```bash
-git clone git@github.com:osvarychevskyi/page-assembly-varnish.git
+git clone https://github.com/osvarychevskyi/page-assembly-varnish.git
 ```
 
 ## Install
