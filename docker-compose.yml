@@ -28,13 +28,15 @@ services:
     environment:
       PORT: 9001
   news:
-    image: "webratio/nodejs-http-server"
-    command: "http-server /opt/www -c-1"
+    image: "nextjs:latest"
+    command: ash -c "npx next build && npx next start -p 9002"
     expose:
       - "9002"
     ports:
       - "9002:9002"
     volumes:
-      - ./html/news:/opt/www
+      - ./news-app/pages:/usr/src/pages
+      - ./news-app/next.config.js:/usr/src/next.config.js
     environment:
-      PORT: 9002
+      - PORT=9002
+      - NODE_ENV=production
