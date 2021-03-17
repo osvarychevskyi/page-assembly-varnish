@@ -6,28 +6,17 @@ services:
     - "8080:80"
     volumes:
     - ./varnish/default.vcl:/etc/varnish/default.vcl
-  page-assembly:
-    image: "webratio/nodejs-http-server"
-    command: "http-server /opt/www -c-1"
-    expose:
-      - "9000"
-    ports:
-    - "9000:9000"
-    volumes:
-    - ./html/page-assembly:/opt/www
-    environment:
-      PORT: 9000
-  content:
+  cms-app:
     image: "webratio/nodejs-http-server"
     expose:
     - "9001"
     ports:
       - "9001:9001"
     volumes:
-      - ./html/content:/opt/www
+      - ./cms-app:/opt/www
     environment:
       PORT: 9001
-  news:
+  news-app:
     image: "nextjs:latest"
     command: ash -c "npx next build && npx next start -p 9002"
     expose:
@@ -40,3 +29,16 @@ services:
     environment:
       - PORT=9002
       - NODE_ENV=production
+      - NEXT_PUBLIC_NEWS_API=http://mock-api-app:9003
+  mock-api-app:
+    image: "json-server:latest"
+    command: ash -c "json-server --watch index.js --port 9003 --host 0.0.0.0"
+    expose:
+      - "9003"
+    ports:
+      - "9003:9003"
+    volumes:
+      - ./mock-api-app/data:/usr/src/data
+      - ./mock-api-app/index.js:/usr/src/index.js
+    environment:
+      - PORT=9003

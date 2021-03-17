@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import {Fragment} from "react";
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -9,10 +8,15 @@ class MyDocument extends Document {
 
     render() {
         return (
-            <>
-                <Main />
-                <NextScript />
-            </>
+            <Html>
+                <Head />
+                <body>
+                    <div dangerouslySetInnerHTML={{__html: '<esi:include src="/cms/header/index.html" />'}}></div>
+                    <Main />
+                    <NextScript />
+                    <div dangerouslySetInnerHTML={{__html: '<esi:include src="/cms/footer/index.html" />'}}></div>
+                </body>
+            </Html>
         )
     }
 }
