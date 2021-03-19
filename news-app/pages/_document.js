@@ -11,10 +11,10 @@ class MyDocument extends Document {
             <Html>
                 <Head />
                 <body>
-                    <div dangerouslySetInnerHTML={{__html: '<esi:include src="/cms/header/index.html" />'}}></div>
+                    <esi:include src="/cms/header/index.html" />
                     <Main />
                     <NextScript />
-                    <div dangerouslySetInnerHTML={{__html: '<esi:include src="/cms/footer/index.html" />'}}></div>
+                    <esi:include src="/cms/footer/index.html" />
                 </body>
             </Html>
         )

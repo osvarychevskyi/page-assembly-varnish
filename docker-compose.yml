@@ -26,6 +26,7 @@ services:
     volumes:
       - ./news-app/pages:/usr/src/pages
       - ./news-app/next.config.js:/usr/src/next.config.js
+      - ./news-app/.babelrc:/usr/src/.babelrc
     environment:
       - PORT=9002
       - NODE_ENV=production
