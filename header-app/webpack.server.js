@@ -3,15 +3,20 @@ const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './server/index.js',
+    entry: './src/server.js',
 
     target: 'node',
 
     externals: [nodeExternals()],
 
     output: {
-        path: path.resolve('server-build'),
-        filename: 'index.js'
+        path: path.resolve('build'),
+        filename: 'server.js'
+    },
+
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        writeToDisk: true,
     },
 
     module: {
