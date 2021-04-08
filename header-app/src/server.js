@@ -1,33 +1,25 @@
 import path from 'path';
-import fs from 'fs';
-
-import React from 'react';
 import express from 'express';
-import ReactDOMServer from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 
-import App from './App';
+import App from './client/App';
+import Html from './html';
 
-const PORT = process.env.PORT || 3006;
 const app = express();
 
+app.set('etag', false);
+app.set('cacheControl', false);
 app.get('/', (req, res) => {
-    const app = ReactDOMServer.renderToString(<App />);
-
-    const indexFile = path.resolve(__dirname,'./public/index.html');
-    fs.readFile(indexFile, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Something went wrong:', err);
-            return res.status(500).send('Oops, better luck next time!');
-        }
-
-        return res.send(
-            data.replace('<div id="root"></div>', `<div id="root">${app}</div>`)
-        );
-    });
+    const AppHtmlString = renderToString(
+        <Html>
+            <App />
+        </Html>
+    );
+    res.send(
+        `<!DOCTYPE html>${AppHtmlString}`
+    );
 });
 
 app.use(express.static(path.resolve(__dirname,'./public')));
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+export default () => app;

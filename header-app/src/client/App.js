@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-import { ThemeProvider } from '@emotion/react'
+import { ThemeProvider } from '@emotion/react';
 import {
     space,
     color,
     fontSize,
     layout,
 } from 'styled-system';
+
+import Logo from './logo512.png';
 
 const theme = {
     fontSizes: {
@@ -78,6 +80,7 @@ function App() {
     return (
         <ThemeProvider theme={ theme }>
             <Bar>
+                <img src={ Logo } width={50}/>
                 <Header3>Tech Blog</Header3>
             </Bar>
             <Bar backgroundColor='white'>
