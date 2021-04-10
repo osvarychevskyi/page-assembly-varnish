@@ -11,9 +11,9 @@
     "styled-system": "^5.1.5"
   },
   "scripts": {
-    "start": "NODE_ENV=development babel-node dev-server.js",
-    "build": "NODE_ENV=production babel-node build.js",
-    "test": "react-scripts test"
+    "start": "NODE_ENV=development babel-node scripts/dev-server.js",
+    "build": "NODE_ENV=production babel-node scripts/build.js",
+    "start:prod": "(cd build && node server.js)"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +50,7 @@
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^8.1.1",
     "webpack": "^5.30.0",
+    "webpack-bundle-analyzer": "^4.4.0",
     "webpack-config-utils": "^2.3.1",
     "webpack-dev-middleware": "^3.7.3",
     "webpack-hot-middleware": "^2.25.0",

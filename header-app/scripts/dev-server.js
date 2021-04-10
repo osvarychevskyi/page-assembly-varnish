@@ -3,8 +3,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
-import serverConfig from './webpack/webpack.config.server';
-import clientConfig from './webpack/webpack.config.client';
+import serverConfig from '../webpack/webpack.config.server';
+import clientConfig from '../webpack/webpack.config.client';
 
 const app = express();
 

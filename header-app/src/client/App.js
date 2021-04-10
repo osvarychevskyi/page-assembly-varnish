@@ -76,15 +76,18 @@ Button.defaultProps = {
 };
 
 function App() {
-
+    function handleClick(e) {
+        e.preventDefault();
+        console.log('The link was clicked.');
+    }
     return (
         <ThemeProvider theme={ theme }>
             <Bar>
-                <img src={ Logo } width={50}/>
+                <img src={ Logo } width="50" height="50" />
                 <Header3>Tech Blog</Header3>
             </Bar>
             <Bar backgroundColor='white'>
-                <Button>Home</Button>
+                <Button onClick={handleClick}>Home</Button>
                 <Button>News</Button>
                 <Button>About Us</Button>
             </Bar>

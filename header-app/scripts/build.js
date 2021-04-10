@@ -1,6 +1,6 @@
 import webpack from 'webpack';
-import serverConfig from './webpack/webpack.config.server';
-import clientConfig from './webpack/webpack.config.client';
+import serverConfig from '../webpack/webpack.config.server';
+import clientConfig from '../webpack/webpack.config.client';
 
 const compiler = webpack([clientConfig, serverConfig]);
 

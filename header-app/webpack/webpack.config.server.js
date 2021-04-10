@@ -8,7 +8,7 @@ const { ifDevelopment, ifProduction } = getIfUtils(process.env.NODE_ENV);
 
 export default {
     name: 'server',
-    entry: './src/server.js',
+    entry: ifDevelopment('./src/render.js', './src/server.js'),
     mode: ifDevelopment('development', 'production'),
 
     target: 'node',
@@ -19,7 +19,8 @@ export default {
         path: path.resolve('build'),
         filename: 'server.js',
         libraryTarget: 'umd',
-        assetModuleFilename: 'public/[name].[contenthash][ext][query]',
+        publicPath: '/',
+        assetModuleFilename: '[name].[contenthash][ext][query]',
     },
 
     module: {

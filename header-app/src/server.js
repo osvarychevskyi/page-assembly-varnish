@@ -1,25 +1,19 @@
 import path from 'path';
+import fs from 'fs';
 import express from 'express';
-import { renderToString } from 'react-dom/server';
 
-import App from './client/App';
-import Html from './html';
+import render from "./render";
+
+const clientStats = JSON.parse(fs.readFileSync('./stats.json', 'utf8'));
 
 const app = express();
 
 app.set('etag', false);
 app.set('cacheControl', false);
-app.get('/', (req, res) => {
-    const AppHtmlString = renderToString(
-        <Html>
-            <App />
-        </Html>
-    );
-    res.send(
-        `<!DOCTYPE html>${AppHtmlString}`
-    );
+app.get('/', render({ clientStats }));
+
+app.use(express.static(path.resolve(__dirname, './public')));
+
+app.listen(3040, 'localhost', () => {
+    console.log(`Server started: http://${'localhost'}:${'3040'}`);
 });
-
-app.use(express.static(path.resolve(__dirname,'./public')));
-
-export default () => app;
