@@ -6,6 +6,18 @@ services:
     - "8080:80"
     volumes:
     - ./varnish/default.vcl:/etc/varnish/default.vcl
+  header-app:
+    image: "radaller:latest"
+    command: ash -c "(cd build && node server.js)"
+    expose:
+      - "9004"
+    ports:
+      - "9004:9004"
+    volumes:
+      - ./header-app/build:/usr/src/build
+    environment:
+      PORT: 9004
+      HOST: 0.0.0.0
   cms-app:
     image: "webratio/nodejs-http-server"
     expose:

@@ -9,6 +9,9 @@ backend cms-app {
 backend news-app {
   .host = "news-app:9002";
 }
+backend header-app {
+  .host = "header-app:9004";
+}
 
 sub vcl_recv {
 
@@ -16,6 +19,8 @@ sub vcl_recv {
         set req.backend_hint = cms-app;
     } elseif (req.url ~ "^\/news\/") {
         set req.backend_hint = news-app;
+    } elseif (req.url ~ "^\/header\/") {
+        set req.backend_hint = header-app;
     }
 }
 

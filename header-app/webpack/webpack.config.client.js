@@ -4,7 +4,7 @@ import { getIfUtils } from 'webpack-config-utils';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-const { ifDevelopment, ifProduction } = getIfUtils(process.env.NODE_ENV);
+const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
 export default {
     name: 'client',
@@ -20,7 +20,7 @@ export default {
         path: path.resolve('build/public'),
         filename: 'js/[name].[chunkhash].js',
         publicPath: '/',
-        assetModuleFilename: '[name].[contenthash][ext][query]',
+        assetModuleFilename: 'img/[name].[contenthash][ext][query]',
     },
 
     module: {

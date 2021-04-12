@@ -11,7 +11,7 @@ class MyDocument extends Document {
             <Html>
                 <Head />
                 <body>
-                    <esi:include src="/cms/header/index.html" />
+                    <esi:include src="/header/" />
                     <Main />
                     <NextScript />
                     <esi:include src="/cms/footer/index.html" />

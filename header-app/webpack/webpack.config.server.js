@@ -1,32 +1,36 @@
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import webpack from 'webpack';
-import { getIfUtils } from 'webpack-config-utils';
+import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import CopyPlugin from "copy-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
-const { ifDevelopment, ifProduction } = getIfUtils(process.env.NODE_ENV);
+const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
-export default {
+export default removeEmpty({
     name: 'server',
     entry: ifDevelopment('./src/render.js', './src/server.js'),
     mode: ifDevelopment('development', 'production'),
 
     target: 'node',
 
-    externals: [nodeExternals()],
+    externals: [nodeExternals({
+        //allowlist: ['react']
+    })],
 
     output: {
         path: path.resolve('build'),
         filename: 'server.js',
         libraryTarget: 'umd',
         publicPath: '/',
-        assetModuleFilename: '[name].[contenthash][ext][query]',
+        assetModuleFilename: 'img/[name].[contenthash][ext][query]',
     },
 
     module: {
         rules: [
             {
                 test: /\.js$/,
+                exclude: /node_modules/,
                 use: 'babel-loader'
             },
             {
@@ -44,8 +48,13 @@ export default {
         }),
         new CopyPlugin({
             patterns: [
-                { from: "assets", to: "public/[name].[contenthash][ext]" },
+                { from: "assets", to: "public/img/[name].[contenthash][ext]" },
             ],
         }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: path.resolve(`build/analyze/server.html`),
+            openAnalyzer: false,
+        }),
     ],
-};
+});
