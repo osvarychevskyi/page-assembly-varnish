@@ -11,9 +11,9 @@
     "styled-system": "^5.1.5"
   },
   "scripts": {
-    "start": "NODE_ENV=development BASE_PATH=/header/ babel-node scripts/dev-server.js",
-    "build": "NODE_ENV=production BASE_PATH=/header/ babel-node scripts/build.js",
-    "start:build": "(cd build && BASE_PATH=/header/ node server.js)"
+    "start": "NODE_ENV=development babel-node scripts/dev-server.js",
+    "build": "NODE_ENV=production babel-node scripts/build.js",
+    "start:build": "(cd build && node server.js)"
   },
   "eslintConfig": {
     "extends": [

@@ -5,9 +5,11 @@ import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import CopyPlugin from "copy-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
-const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
+import config from '../build.config';
 
-const BASE_PATH = process.env.BASE_PATH || '/';
+const BASE_PATH = config.basePath || '/';
+
+const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
 export default removeEmpty({
     name: 'server',

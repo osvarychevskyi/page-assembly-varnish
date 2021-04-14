@@ -1,14 +1,16 @@
 import path from 'path';
 import webpack from 'webpack';
-import { getIfUtils } from 'webpack-config-utils';
+import {getIfUtils, removeEmpty} from 'webpack-config-utils';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
+import config from '../build.config';
+
+const BASE_PATH = config.basePath || '/';
+
 const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
-const BASE_PATH = process.env.BASE_PATH || '/';
-
-export default {
+export default removeEmpty({
     name: 'client',
     entry: {
         main: './src/client.js',
@@ -33,7 +35,7 @@ export default {
                 use: 'babel-loader'
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|ico|json)$/i,
                 type: 'asset/resource',
             },
         ]
@@ -67,4 +69,4 @@ export default {
             openAnalyzer: false,
         }),
     ],
-};
+});

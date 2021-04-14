@@ -5,10 +5,11 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
 import serverConfig from '../webpack/webpack.config.server';
 import clientConfig from '../webpack/webpack.config.client';
+import config from '../build.config';
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3040;
-const BASE_PATH = process.env.BASE_PATH || '/';
+const BASE_PATH = config.basePath || '/';
 
 const app = express();
 
