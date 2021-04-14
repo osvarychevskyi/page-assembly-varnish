@@ -7,9 +7,11 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
+const BASE_PATH = process.env.BASE_PATH || '/';
+
 export default removeEmpty({
     name: 'server',
-    entry: ifDevelopment('./src/render.js', './src/server.js'),
+    entry: ifDevelopment('./src/_render.js', './src/server.js'),
     mode: ifDevelopment('development', 'production'),
 
     target: 'node',
@@ -22,7 +24,7 @@ export default removeEmpty({
         path: path.resolve('build'),
         filename: 'server.js',
         libraryTarget: 'umd',
-        publicPath: '/',
+        publicPath: BASE_PATH,
         assetModuleFilename: 'img/[name].[contenthash][ext][query]',
     },
 
@@ -48,7 +50,7 @@ export default removeEmpty({
         }),
         new CopyPlugin({
             patterns: [
-                { from: "assets", to: "public/img/[name].[contenthash][ext]" },
+                { from: "src/assets", to: "public/img/[name].[contenthash][ext]" },
             ],
         }),
         new BundleAnalyzerPlugin({

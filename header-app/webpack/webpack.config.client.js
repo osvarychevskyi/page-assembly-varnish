@@ -6,10 +6,12 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
+const BASE_PATH = process.env.BASE_PATH || '/';
+
 export default {
     name: 'client',
     entry: {
-        main: './src/client/index.js',
+        main: './src/client.js',
     },
     mode: ifDevelopment('development', 'production'),
 
@@ -19,7 +21,7 @@ export default {
     output: {
         path: path.resolve('build/public'),
         filename: 'js/[name].[chunkhash].js',
-        publicPath: '/',
+        publicPath: BASE_PATH,
         assetModuleFilename: 'img/[name].[contenthash][ext][query]',
     },
 

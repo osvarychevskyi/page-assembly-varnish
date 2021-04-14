@@ -8,7 +8,7 @@ services:
     - ./varnish/default.vcl:/etc/varnish/default.vcl
   header-app:
     image: "radaller:latest"
-    command: ash -c "(cd build && node server.js)"
+    command: ash -c "(cd build && BASE_PATH=/header/ node server.js)"
     expose:
       - "9004"
     ports:

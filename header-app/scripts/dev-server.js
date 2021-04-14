@@ -5,17 +5,17 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
 import serverConfig from '../webpack/webpack.config.server';
 import clientConfig from '../webpack/webpack.config.client';
-import path from "path";
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3040;
+const BASE_PATH = process.env.BASE_PATH || '/';
 
 const app = express();
 
 const compiler = webpack([clientConfig, serverConfig]);
 
 const options = {
-    publicPath: clientConfig.output.publicPath,
+    publicPath: '/',
     serverSideRender: true,
     stats: {
         colors: true,
@@ -31,11 +31,9 @@ const options = {
 app.set('etag', false);
 app.set('cacheControl', false);
 
-app.use(express.static(path.resolve(__dirname, './public')));
-
-app.use('/', webpackDevMiddleware(compiler, options));
-app.use('/', webpackHotMiddleware(compiler.compilers.find(cmp => cmp.name === 'client')));
-app.use('/', webpackHotServerMiddleware(compiler));
+app.use(BASE_PATH, webpackDevMiddleware(compiler, options));
+app.use(BASE_PATH, webpackHotMiddleware(compiler.compilers.find(cmp => cmp.name === 'client')));
+app.use(BASE_PATH, webpackHotServerMiddleware(compiler));
 
 app.listen(PORT, HOST, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);

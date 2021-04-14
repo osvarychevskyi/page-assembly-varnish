@@ -15,6 +15,11 @@ backend header-app {
 
 sub vcl_recv {
 
+    if (req.esi_level > 0) {
+        set req.http.esi = true;
+        set req.http.esi-top-url = req_top.url;
+    }
+
     if (req.url == "/" || req.url ~ "^\/cms\/") {
         set req.backend_hint = cms-app;
     } elseif (req.url ~ "^\/news\/") {
