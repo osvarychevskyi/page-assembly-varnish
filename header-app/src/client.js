@@ -7,5 +7,5 @@ ReactDOM.hydrate(
     <React.StrictMode>
         <App />
     </React.StrictMode>,
-    document.getElementById('root-header')
+    document.getElementById(FRAGMENT_ID)
 );

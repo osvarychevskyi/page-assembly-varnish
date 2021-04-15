@@ -22,6 +22,7 @@ const theme = {
     },
     colors: {
         text: 'rgba(0, 0, 0, 0.87)',
+        white: '#FFFFFF',
         primary: '#1976d2',
         red: '#e10',
     },
@@ -82,11 +83,11 @@ function App() {
     }
     return (
         <ThemeProvider theme={ theme }>
-            <Bar>
+            <Bar className={"header"}>
                 <img src={ Logo } width="50" height="50" />
                 <Header3>Tech Blog</Header3>
             </Bar>
-            <Bar backgroundColor='white'>
+            <Bar className={"main-menu"} backgroundColor='white'>
                 <Button onClick={handleClick}>Home</Button>
                 <Button>News</Button>
                 <Button>About Us</Button>

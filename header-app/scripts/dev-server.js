@@ -5,11 +5,9 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
 import serverConfig from '../webpack/webpack.config.server';
 import clientConfig from '../webpack/webpack.config.client';
-import config from '../build.config';
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3040;
-const BASE_PATH = config.basePath || '/';
 
 const app = express();
 
@@ -32,9 +30,9 @@ const options = {
 app.set('etag', false);
 app.set('cacheControl', false);
 
-app.use(BASE_PATH, webpackDevMiddleware(compiler, options));
-app.use(BASE_PATH, webpackHotMiddleware(compiler.compilers.find(cmp => cmp.name === 'client')));
-app.use(BASE_PATH, webpackHotServerMiddleware(compiler));
+app.use(serverConfig.output.publicPath, webpackDevMiddleware(compiler, options));
+app.use(serverConfig.output.publicPath, webpackHotMiddleware(compiler.compilers.find(cmp => cmp.name === 'client')));
+app.use(serverConfig.output.publicPath, webpackHotServerMiddleware(compiler));
 
 app.listen(PORT, HOST, () => {
     console.log(`Server started: http://${HOST}:${PORT}`);

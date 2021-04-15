@@ -2,12 +2,10 @@ import path from 'path';
 import fs from 'fs';
 import express from 'express';
 
-import config from '../build.config';
 import render from "./_render";
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3040;
-const BASE_PATH = config.basePath || '/';
 
 const clientStats = JSON.parse(fs.readFileSync('./stats.json', 'utf8'));
 

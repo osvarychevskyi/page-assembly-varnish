@@ -1,12 +1,15 @@
 import path from 'path';
 import webpack from 'webpack';
-import {getIfUtils, removeEmpty} from 'webpack-config-utils';
+import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import config from '../build.config';
 
-const BASE_PATH = config.basePath || '/';
+const {
+    BASE_PATH = '/',
+    FRAGMENT_ID = 'root'
+} = config;
 
 const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
@@ -35,7 +38,8 @@ export default removeEmpty({
                 use: 'babel-loader'
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|ico|json)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+                exclude: /node_modules/,
                 type: 'asset/resource',
             },
         ]
@@ -55,6 +59,10 @@ export default removeEmpty({
     plugins: [
         new webpack.ProvidePlugin({
             "React": "react",
+        }),
+        new webpack.DefinePlugin({
+            BASE_PATH: JSON.stringify(BASE_PATH),
+            FRAGMENT_ID: JSON.stringify(FRAGMENT_ID),
         }),
         new StatsWriterPlugin({
             filename: '../stats.json',

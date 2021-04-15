@@ -7,20 +7,22 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 import config from '../build.config';
 
-const BASE_PATH = config.basePath || '/';
+const {
+    BASE_PATH = '/',
+    FRAGMENT_ID = 'root'
+} = config;
 
 const { ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
 export default removeEmpty({
     name: 'server',
+    devtool: ifDevelopment('source-map'),
     entry: ifDevelopment('./src/_render.js', './src/server.js'),
     mode: ifDevelopment('development', 'production'),
 
     target: 'node',
 
-    externals: [nodeExternals({
-        //allowlist: ['react']
-    })],
+    externals: ifDevelopment([nodeExternals()]),
 
     output: {
         path: path.resolve('build'),
@@ -38,7 +40,8 @@ export default removeEmpty({
                 use: 'babel-loader'
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|ico|json)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+                exclude: /node_modules/,
                 type: 'asset/resource',
                 generator: {
                     emit: false,
@@ -50,6 +53,10 @@ export default removeEmpty({
         new webpack.ProvidePlugin({
             "React": "react",
         }),
+        new webpack.DefinePlugin(removeEmpty({
+            BASE_PATH: JSON.stringify(BASE_PATH),
+            FRAGMENT_ID: JSON.stringify(FRAGMENT_ID),
+        })),
         new CopyPlugin({
             patterns: [
                 { from: "src/assets", to: "public/img/[name].[contenthash][ext]" },
